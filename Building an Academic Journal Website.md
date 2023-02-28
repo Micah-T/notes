@@ -37,9 +37,9 @@ permalink: "/volume/issue/article-title/"
 Each issue is represented by a JSON file. Eleventy has a [directory data file structure](https://www.11ty.dev/docs/data-template-dir/), by which data values can be set for the entire directory. Each file must be named after its directory: `/volume/issue/issue.json`. I used this to set article and volume information for all the articles, but also to provide data to generate a page for each issue. An issue data file is formatted like this:
 ```json
 {
-  "volume": volume number (integer),
-  "issue": issue number (integer),
-  "date": "data",
+  "volume": 1,
+  "issue": 1,
+  "date": "date",
   "issueTitle": "Title of the Issue",
   "articleCategories": [
     "category 1",
@@ -58,7 +58,7 @@ Each issue is represented by a JSON file. Eleventy has a [directory data file st
 }
 ```
 
-The academic journal format also requires a page for each issue. I chose not to make a page for each volume because I wished to keep the site somewhat simpler. If a journal published many issues for each volume or each volume was thematically related, then having a page for each volume would be useful. The best way to generate a page for each issue is with the [pagination](https://www.11ty.dev/docs/pagination/) feature which Eleventy provides. However, each of these data files is its own separate file. They must be collected and added together into an array. Eleventy also allows for using [JavaScript as data files](https://www.11ty.dev/docs/data-js/), which allows making a script which collects all of these different data files into a single array. [The code is located here](https://github.com/westmarchjournal/website/blob/master/_data/fetchIssues.js). The pagination template looks like this. I have decided to leave code similar to normal website code when possible (hence, `post.variables`). 
+The academic journal format also requires a page for each issue. I chose not to make a page for each volume because I wished to keep the site somewhat simpler. If a journal published many issues for each volume or each volume was thematically related, then having a page for each volume would be useful. The best way to generate a page for each issue is with the [pagination](https://www.11ty.dev/docs/pagination/) feature which Eleventy provides. However, each of these data files is its own separate file. They must be collected and added together into an array. Eleventy also allows for using [JavaScript as data files](https://www.11ty.dev/docs/data-js/), which allows making a script which collects all of these different data files into a single array. [The code is located here](https://github.com/westmarchjournal/website/blob/master/_data/fetchIssues.js). The pagination template looks like this. I have decided to leave the template code similar to the code used in Eleventy examples when possible (hence, `post.variables`). 
 ```liquid
 ---
 pagination:
@@ -100,7 +100,54 @@ permalink: "/{{ issue.volume }}/{{ issue.issue }}/"
 
 [^1]:  See Tim Berners-Lee,  *[Cool URIs don't change](https://www.w3.org/Provider/Style/URI.html)*, 1998. 
 
+# Citation Generator
+The particular needs of each academic journal will dictate which citation formats are readily available. The citation can be readily integrated into the article template. Enclosing the citation in a `<details` element avoids cluttering the page. This is an example of a Turabian note. 
+```nunjucks
+<details class="citation">
+    <summary>Cite this page</summary>
+    <p>
+        {{ author }},
+        &ldquo;{{ title | safe }},&rdquo;
+        <i>{{ metadata.title | title }}</i>
+        {{ volume }}, no. {{ issue }} ({{ page.date | readableDate }}),
+        {{ metadata.citationurl}}{{ page.url | url }}.
+    </p>
+</details>
+```
+
+It is also helpful to provide citations in [RIS format](https://en.wikipedia.org/wiki/RIS_(file_format), which is easily read by most popular reference management software. These files are generated for each article using [pagination](https://www.11ty.dev/docs/pagination/), with the data source being `collections.article`. The `absoluteUrl()` filter is from the [Eleventy RSS plugin](https://www.11ty.dev/docs/plugins/rss/), which provides filters which are useful both in RSS and elsewhere. 
+```nunjucks
+---
+pagination:
+  data: collections.article
+  size: 1
+  alias: citation
+  addAllPagesToCollections: true
+permalink: /{{ citation.url }}/citation.ris
+---
+TY  - EJOUR
+A1  - {{ citation.data.author }}
+DA  - {{ citation.date | year }}
+PY  - {{ citation.date | year }}
+J1  - {{ metadata.title | title }}
+J2  - {{ metadata.short_title }}
+JA  - {{ metadata.short_title }}
+JF  - {{ metadata.title | title }}
+L2  - {{ citation.url | url | absoluteUrl(metadata.url) }}
+LK  - {{ citation.url | url | absoluteUrl(metadata.url) }}
+T1  - {{ citation.data.title }}
+T2  - {{ metadata.title | title }}
+TI  - {{ citation.data.title }}
+VL  - {{ citation.data.volume }}
+IS  - {{ citation.data.issue }}
+ER  - 
+```
+In the page template, a link to the citation RIS file can be generated with `{{ page.url }}citation.ris`. 
+
 ## Really Specific Things
+## Author Names
+Depending on the location, author names may need to be shown as "Firstname Sastname" or "Surname, Firstname." 
+
 ### Including HTML elements in titles
 In academic writing, it is often necessary to include italics in the title ([example](https://westmarchjournal.org/3/2/georgics-2-475-486/)). The `title` tag, however, does not allow child elements. It is thus necessary to use the Eleventy `safe` filter for the headings to allow HTML elements and to make a custom filter to remove HTML tags. This filter is also useful in feeds. The filter function should be [included in the Eleventy configuration file](https://www.11ty.dev/docs/filters/). 
 ```js
