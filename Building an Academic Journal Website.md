@@ -101,5 +101,17 @@ permalink: "/{{ issue.volume }}/{{ issue.issue }}/"
 [^1]:  See Tim Berners-Lee,  *[Cool URIs don't change](https://www.w3.org/Provider/Style/URI.html)*, 1998. 
 
 ## Really Specific Things
-HTML tags in titles
-footnotes
+### Including HTML elements in titles
+In academic writing, it is often necessary to include italics in the title ([example](https://westmarchjournal.org/3/2/georgics-2-475-486/)). The `title` tag, however, does not allow child elements. It is thus necessary to use the Eleventy `safe` filter for the headings to allow HTML elements and to make a custom filter to remove HTML tags. This filter is also useful in feeds. The filter function should be [included in the Eleventy configuration file](https://www.11ty.dev/docs/filters/). 
+```js
+const striptags = require("striptags");
+module.exports = function(eleventyConfig) {
+  eleventyConfig.addFilter("striptags", function(value) {
+      let product = striptags(value);
+      return product;
+  });
+};
+```
+
+### Footnotes
+Footnotes are necessary for academic writing. [`markdown-it-footnotes`](https://github.com/markdown-it/markdown-it-footnote) is a footnote plugin for `markdown-it`, and is compatible with Pandoc. The Eleventy documentation discusses [how to use markdown plugins](https://www.11ty.dev/docs/languages/markdown/#add-your-own-plugins). 
