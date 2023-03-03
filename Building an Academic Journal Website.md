@@ -1,8 +1,11 @@
 
 # Introduction and Requirements
-I recently built the website for the [Westmarch Literary Journal](https://westmarchjournal.org/) at Patrick Henry College. This is an academic journal website, so there are some requirements which are not commonly found in other websites. 
+I recently built the website for the [Westmarch Literary Journal](https://westmarchjournal.org/) at Patrick Henry College. This is an academic journal website, so there are some requirements which are not commonly found in other websites:
+1. [Maintainability and Readibility](#maintainability-and-readibility).
+2. [Citation tools](citation-generator)
+3. [Inclusion for Google Scholar and similar services](inclusion-for-google-scholar)
 
-## Maintainability and Readibility
+# Maintainability and Readibility
 Academic journal websites must be readible and maintainable for a long period of time. Academic study seeks to increase the sum of knowledge that is available while also building certainty in this knowledge. To increase the sum of available knowledge requires readibility--our work is not particularly useful if it is inaccessible. To make the knowledge more certain requires maintaining this access--if cited works can no longer be found, this makes verifying research impossible. 
 
 Readibility requires making websites easily accessible. This is a complex and frequently dicussed topic, though it can be simply summed: one ought to avoid doing anything which makes a website hard to read; that is, websites should be no more complex for the user's computer than is necessary. Thus, a correctly-authored HTML with few scripts is how an academic website should be authored. 
@@ -11,7 +14,7 @@ Maintainability requires that the content be easily updated and maintained for a
 
 This is something which seems to be commonly neglected in academia. Academics have traditionally been quite attached to printing--the quantity of material which we must read dictates that we prefer print since it causes less strain on the eyes. In addition, academics tend to have some technical knowledge, but only as a means to our studies. This means that we are often able to build websites, but rarely take the time to build them carefully since we are focusing on our studies. This series seeks to make lower this barrier. 
 
-## Structure
+## Data Structure
 Academic journals tend to be structured in issues and volumes. This is somewhat different from how websites tend to be structured: websites tend to be organized either by individual articles, by topic, by author, or by date. In addition, issues have a standard format. 
 
 I chose to organize the files in a directory structure in order to keep them organized for future authors. It resembles this:
