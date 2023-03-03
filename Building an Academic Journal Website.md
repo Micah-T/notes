@@ -1,9 +1,9 @@
 
 # Introduction and Requirements
-I recently built the website for the [Westmarch Literary Journal](https://westmarchjournal.org/) at Patrick Henry College. This is an academic journal website, so there are some requirements which are not commonly found in other websites:
+I recently built the website for the [Westmarch Literary Journal](https://westmarchjournal.org/) at Patrick Henry College. This is an academic journal website, so there are some requirements which are especially important for academic websites:
 1. [Maintainability and Readibility](#maintainability-and-readibility).
-2. [Citation tools](citation-generator)
-3. [Inclusion for Google Scholar and similar services](inclusion-for-google-scholar)
+2. [Citation tools](#citation-generator)
+3. [Inclusion for Google Scholar and similar services](#inclusion-for-google-scholar)
 
 # Maintainability and Readibility
 Academic journal websites must be readible and maintainable for a long period of time. Academic study seeks to increase the sum of knowledge that is available while also building certainty in this knowledge. To increase the sum of available knowledge requires readibility--our work is not particularly useful if it is inaccessible. To make the knowledge more certain requires maintaining this access--if cited works can no longer be found, this makes verifying research impossible. 

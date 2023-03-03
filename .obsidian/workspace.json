@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "1de563aeee6274e2",
+        "id": "212d6799b2e0d854",
         "type": "tabs",
         "children": [
           {
-            "id": "a7df08a3102e3c71",
+            "id": "abe96988c813799c",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Building an Academic Journal Website.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -85,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Building an Academic Journal Website.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Building an Academic Journal Website.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -124,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Building an Academic Journal Website.md"
-              }
+              "state": {}
             }
           }
         ],
@@ -146,8 +138,10 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "991c8cef5668935a",
+  "active": "abe96988c813799c",
   "lastOpenFiles": [
-    "Building an Academic Journal Website.md"
+    "Building an Academic Journal Website.md",
+    "citation-generator.md",
+    "README.md"
   ]
 }
