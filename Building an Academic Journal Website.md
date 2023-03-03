@@ -126,7 +126,7 @@ pagination:
 permalink: /{{ citation.url }}/citation.ris
 ---
 TY  - EJOUR
-A1  - {{ citation.data.author }}
+A1  - {{ citation.data.citationauthor }}
 DA  - {{ citation.date | year }}
 PY  - {{ citation.date | year }}
 J1  - {{ metadata.title | title }}
@@ -142,11 +142,33 @@ VL  - {{ citation.data.volume }}
 IS  - {{ citation.data.issue }}
 ER  - 
 ```
-In the page template, a link to the citation RIS file can be generated with `{{ page.url }}citation.ris`. 
-
-## Really Specific Things
+In the page template, a link to the citation RIS file can be generated with `{{ page.url }}citation.ris`.  Note that `A1` should be in the format "Surname, Given Name". I discuss [below](#Author-Names) how to do this. 
+# Inclusion for Google Scholar
+[The Google Scholar authors discuss more thoroughly what sorts of metadata are necessary for indexing.](https://scholar.google.com/intl/en/scholar/inclusion.html#indexing) I simply used their example. In Nunjucks, it looks like this: 
+```nunjucks
+<meta name="citation_title" content="{{ title }}">
+<meta name="citation_author" content="{{ citationAuthor }}">
+<meta name="citation_publication_date" content="{{ page.date | year }}">
+<meta name="citation_journal_title" content="{{ metadata.title | title}}">
+<meta name="citation_volume" content="{{ volume }}">
+<meta name="citation_issue" content="{{ issue }}">
+```
+## Metadata types (for future research)
+- Highwire Press tags (used in the Google Scholar example).
+- Eprints tags
+- BE press tags
+- PRISM tags
+- Dublin Core tags (Google discourages them).
+# Miscellenea 
 ## Author Names
-Depending on the location, author names may need to be shown as "Firstname Sastname" or "Surname, Firstname." 
+Depending on the location, author names may need to be shown as "Firstname Surname" or "Surname, Firstname." For this, I stored the authors as both `name` and `surname`, and then used [Eleventy computed data](https://www.11ty.dev/docs/data-computed/) in the default template to form two variables, `author` (Given Name, Surname) and `citationauthor` (Surname, Given Name). I used conditionals because pseudonymous and collective authors will still be represented as `author`, because they do not have proper given names and surnames ([example](https://westmarchjournal.org/3/2/the-white-wood-2/)). 
+```nunjucks
+---
+eleventyComputed:
+    author: "{% if name and surname %}{{ name }} {{ surname }}{% else %}{{ author }}{% endif %}"
+    citationAuthor: "{% if name and surname %}{{ surname }}, {{ name }}{% else %}{{ author }}{% endif %}"
+---
+```
 
 ### Including HTML elements in titles
 In academic writing, it is often necessary to include italics in the title ([example](https://westmarchjournal.org/3/2/georgics-2-475-486/)). The `title` tag, however, does not allow child elements. It is thus necessary to use the Eleventy `safe` filter for the headings to allow HTML elements and to make a custom filter to remove HTML tags. This filter is also useful in feeds. The filter function should be [included in the Eleventy configuration file](https://www.11ty.dev/docs/filters/). 
